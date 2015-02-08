@@ -35,7 +35,7 @@ public class SuitTest {
             THREE.of(null);
             failBecauseExceptionWasNotThrown(NullPointerException.class);
         } catch (NullPointerException e) {
-            assertThat(e.getMessage()).isEqualToIgnoringCase("suit");
+            assertThat(e).hasMessage("suit");
         }
     }
 
