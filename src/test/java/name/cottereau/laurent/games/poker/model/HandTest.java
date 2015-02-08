@@ -20,9 +20,11 @@ import static name.cottereau.laurent.games.poker.model.Hand.deal;
 import static name.cottereau.laurent.games.poker.model.Suit.CLUBS;
 import static name.cottereau.laurent.games.poker.model.Suit.HEARTS;
 import static name.cottereau.laurent.games.poker.model.Suit.SPADES;
+import static name.cottereau.laurent.games.poker.model.Value.ACE;
 import static name.cottereau.laurent.games.poker.model.Value.FOUR;
 import static name.cottereau.laurent.games.poker.model.Value.KING;
 import static name.cottereau.laurent.games.poker.model.Value.QUEEN;
+import static name.cottereau.laurent.games.poker.model.Value.TEN;
 import static name.cottereau.laurent.games.poker.model.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
@@ -35,27 +37,35 @@ public class HandTest {
 
     @Test
     public void deal_in_order() {
-        Hand h = deal(KING.of(CLUBS), TWO.of(HEARTS));
-        assertThat(h.getPocket()).hasSize(2).containsExactly(KING.of(CLUBS), TWO.of(HEARTS));
+        Hand h = deal(KING.of(CLUBS), TWO.of(HEARTS), FOUR.of(CLUBS), FOUR.of(
+                HEARTS), FOUR.of(SPADES), TWO.of(SPADES), ACE.of(CLUBS));
+        assertThat(h.getPocket()).hasSize(2).containsExactly(KING.of(CLUBS),
+                TWO.of(HEARTS));
+        assertThat(h.getFlop()).hasSize(3).containsExactly(FOUR.of(CLUBS), FOUR.
+                of(HEARTS), FOUR.of(SPADES));
+        assertThat(h.getTurn()).isEqualTo(TWO.of(SPADES));
+        assertThat(h.getRiver()).isEqualTo(ACE.of(CLUBS));
     }
 
     @Test
     public void cannot_overdeal() {
         try {
-            deal(KING.of(CLUBS), TWO.of(HEARTS), FOUR.of(CLUBS));
+            deal(KING.of(CLUBS), TWO.of(HEARTS), FOUR.of(CLUBS), FOUR.of(HEARTS),
+                    FOUR.of(SPADES), TEN.of(SPADES), ACE.of(CLUBS),
+                    QUEEN.of(HEARTS));
             failBecauseExceptionWasNotThrown(IndexOutOfBoundsException.class);
         } catch (IndexOutOfBoundsException e) {
             assertThat(e).hasMessage("The hand is already fully dealt...");
         }
     }
-    
+
     @Test
     public void cannot_deal_the_same_card_twice() {
         try {
-            deal(QUEEN.of(SPADES), KING.of(CLUBS), KING.of(CLUBS));
+            deal(QUEEN.of(SPADES), KING.of(CLUBS), QUEEN.of(SPADES));
             failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
         } catch (IllegalArgumentException e) {
-            assertThat(e).hasMessage("K♣ was already dealt...");
+            assertThat(e).hasMessage("Q♠ was already dealt...");
         }
     }
 

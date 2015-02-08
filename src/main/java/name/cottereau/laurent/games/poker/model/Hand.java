@@ -30,14 +30,25 @@ import lombok.Getter;
 public class Hand {
 
     private static final int POCKET_MAX_SIZE = 2;
+    private static final int FLOP_MAX_SIZE = 3;
 
+    private final List<Card> pocket = new ArrayList<>(POCKET_MAX_SIZE);
+    private final List<Card> flop = new ArrayList<>(FLOP_MAX_SIZE);
+    private Card turn;
+    private Card river;
 
     private Hand deal(Card c) throws IndexOutOfBoundsException, IllegalArgumentException {
-        if (pocket.contains(c)) {
+        if (pocket.contains(c) || flop.contains(c) || turn == c || river == c) {
             throw new IllegalArgumentException(c + " was already dealt...");
         }
         if (pocket.size() < POCKET_MAX_SIZE) {
             pocket.add(c);
+        } else if (flop.size() < FLOP_MAX_SIZE) {
+            flop.add(c);
+        } else if (turn == null) {
+            turn = c;
+        } else if (river == null) {
+            river = c;
         } else {
             throw new IndexOutOfBoundsException("The hand is already fully dealt...");
         }
