@@ -16,8 +16,6 @@
  */
 package name.cottereau.laurent.games.poker.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NonNull;
 import static name.cottereau.laurent.games.poker.model.Suit.randomSuit;
 import static name.cottereau.laurent.games.poker.model.Value.randomValue;
@@ -25,8 +23,7 @@ import static name.cottereau.laurent.games.poker.model.Value.randomValue;
 /**
  * A card, with a suit and a value.
  */
-@Data
-@AllArgsConstructor
+@lombok.Value
 public class Card implements Comparable {
 
     @NonNull private Suit suit;
