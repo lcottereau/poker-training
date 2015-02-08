@@ -39,12 +39,9 @@ public class HandTest {
     public void deal_in_order() {
         Hand h = deal(KING.of(CLUBS), TWO.of(HEARTS), FOUR.of(CLUBS), FOUR.of(
                 HEARTS), FOUR.of(SPADES), TWO.of(SPADES), ACE.of(CLUBS));
-        assertThat(h.getPocket()).hasSize(2).containsExactly(KING.of(CLUBS),
-                TWO.of(HEARTS));
-        assertThat(h.getFlop()).hasSize(3).containsExactly(FOUR.of(CLUBS), FOUR.
-                of(HEARTS), FOUR.of(SPADES));
-        assertThat(h.getTurn()).isEqualTo(TWO.of(SPADES));
-        assertThat(h.getRiver()).isEqualTo(ACE.of(CLUBS));
+        assertThat(h.getCards()).hasSize(7).containsExactly(KING.of(CLUBS),
+                TWO.of(HEARTS), FOUR.of(CLUBS), FOUR.of(HEARTS), FOUR.of(SPADES),
+                TWO.of(SPADES), ACE.of(CLUBS));
     }
 
     @Test

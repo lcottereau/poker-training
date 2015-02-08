@@ -18,42 +18,24 @@ package name.cottereau.laurent.games.poker.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import static lombok.AccessLevel.PRIVATE;
+import lombok.AllArgsConstructor;
 
 /**
  * A set of cards, representing the pocket of a player, as well as the communal
- * cards.
+ * cards. It is immutable.
  */
-@Getter
-@EqualsAndHashCode
+@lombok.Value
+@AllArgsConstructor(access = PRIVATE)
 public class Hand {
 
-    private static final int POCKET_MAX_SIZE = 2;
-    private static final int FLOP_MAX_SIZE = 3;
+    /**
+     * A hand contains, at the most, the pocket (2 cards), the flop (3 cards),
+     * the turn and the river.
+     */
+    private static final int MAX_SIZE = 7;
 
-    private final List<Card> pocket = new ArrayList<>(POCKET_MAX_SIZE);
-    private final List<Card> flop = new ArrayList<>(FLOP_MAX_SIZE);
-    private Card turn;
-    private Card river;
-
-    private Hand deal(Card c) throws IndexOutOfBoundsException, IllegalArgumentException {
-        if (pocket.contains(c) || flop.contains(c) || turn == c || river == c) {
-            throw new IllegalArgumentException(c + " was already dealt...");
-        }
-        if (pocket.size() < POCKET_MAX_SIZE) {
-            pocket.add(c);
-        } else if (flop.size() < FLOP_MAX_SIZE) {
-            flop.add(c);
-        } else if (turn == null) {
-            turn = c;
-        } else if (river == null) {
-            river = c;
-        } else {
-            throw new IndexOutOfBoundsException("The hand is already fully dealt...");
-        }
-        return this;
-    }
+    private List<Card> cards;
 
     /**
      * Returns a new hand dealt with all the cards passed as arguments. It deals
@@ -65,11 +47,20 @@ public class Hand {
      * @return the corresponding hand
      */
     public static Hand deal(Card... values) throws IndexOutOfBoundsException, IllegalArgumentException {
-        Hand h = new Hand();
+        List<Card> cards = new ArrayList<>(values.length);
+
         for (Card c : values) {
-            h.deal(c);
+            if (cards.size() >= MAX_SIZE) {
+                throw new IndexOutOfBoundsException(
+                        "The hand is already fully dealt...");
+            } else if (cards.contains(c)) {
+                throw new IllegalArgumentException(c + " was already dealt...");
+            } else {
+                cards.add(c);
+            }
         }
-        return h;
+        
+        return new Hand(cards);
     }
 
 }
