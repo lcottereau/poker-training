@@ -18,13 +18,15 @@ package name.cottereau.laurent.games.poker.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * A set of cards, representing the pocket of a player, as well as the communal
  * cards.
  */
-@Data
+@Getter
+@EqualsAndHashCode
 public class Hand {
 
     private static final int POCKET_MAX_SIZE = 2;
