@@ -16,8 +16,8 @@
  */
 package name.cottereau.laurent.games.poker.model;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Data;
 
 /**
@@ -29,11 +29,6 @@ public class Hand {
 
     private static final int POCKET_MAX_SIZE = 2;
 
-    /**
-     * @TODO should we keep this a set (with the overcost of it), since we
-     * already check the unicty at {@link #deal()} ?
-     */
-    private SortedSet<Card> pocket = new TreeSet<>();
 
     private Hand deal(Card c) throws IndexOutOfBoundsException, IllegalArgumentException {
         if (pocket.contains(c)) {
