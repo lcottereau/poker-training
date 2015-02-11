@@ -22,6 +22,7 @@ import java.util.List;
 import static lombok.AccessLevel.PRIVATE;
 import lombok.AllArgsConstructor;
 import name.cottereau.laurent.games.poker.model.rank.Rank;
+import static name.cottereau.laurent.games.poker.model.rank.Rank.Type.FOUR_OF_A_KIND;
 import static name.cottereau.laurent.games.poker.model.rank.Rank.Type.HIGH_CARD;
 import static name.cottereau.laurent.games.poker.model.rank.Rank.Type.PAIR;
 import static name.cottereau.laurent.games.poker.model.rank.Rank.Type.THREE_OF_A_KIND;
@@ -92,8 +93,12 @@ public class Hand implements Comparable<Hand> {
                 handValues.set(index, handValues.get(index) + 1);
             }
         }
-
-        if (handValues.contains(3)) {
+        
+        if (handValues.contains(4)) {
+            List<Value> specifics = new ArrayList<>(1);
+            specifics.add(allValues[allValues.length - handValues.indexOf(4) - 1]);
+            return new Rank(FOUR_OF_A_KIND, specifics);
+        } else if (handValues.contains(3)) {
             List<Value> specifics = new ArrayList<>(1);
             specifics.add(allValues[allValues.length - handValues.indexOf(3) - 1]);
             return new Rank(THREE_OF_A_KIND, specifics);

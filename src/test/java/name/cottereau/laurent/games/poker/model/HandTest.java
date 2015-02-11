@@ -29,6 +29,7 @@ import static name.cottereau.laurent.games.poker.model.Value.QUEEN;
 import static name.cottereau.laurent.games.poker.model.Value.TEN;
 import static name.cottereau.laurent.games.poker.model.Value.THREE;
 import static name.cottereau.laurent.games.poker.model.Value.TWO;
+import static name.cottereau.laurent.games.poker.model.rank.Rank.Type.FOUR_OF_A_KIND;
 import static name.cottereau.laurent.games.poker.model.rank.Rank.Type.HIGH_CARD;
 import static name.cottereau.laurent.games.poker.model.rank.Rank.Type.PAIR;
 import static name.cottereau.laurent.games.poker.model.rank.Rank.Type.THREE_OF_A_KIND;
@@ -117,6 +118,15 @@ public class HandTest {
                 QUEEN.of(CLUBS), QUEEN.of(SPADES), KING.of(DIAMONDS),
                 KING.of(SPADES));
         assertThat(h.getRank().getType()).isEqualTo(THREE_OF_A_KIND);
+        assertThat(h.getRank().getSpecifics()).containsExactly(KING);
+    }
+    
+    @Test
+    public void rank_of_four_of_a_kind() {
+        Hand h = deal(KING.of(CLUBS), KING.of(HEARTS), TWO.of(HEARTS),
+                QUEEN.of(CLUBS), QUEEN.of(SPADES), KING.of(DIAMONDS),
+                KING.of(SPADES));
+        assertThat(h.getRank().getType()).isEqualTo(FOUR_OF_A_KIND);
         assertThat(h.getRank().getSpecifics()).containsExactly(KING);
     }
 
