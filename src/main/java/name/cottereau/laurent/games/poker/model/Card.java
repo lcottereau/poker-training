@@ -17,8 +17,6 @@
 package name.cottereau.laurent.games.poker.model;
 
 import lombok.NonNull;
-import static name.cottereau.laurent.games.poker.model.Suit.randomSuit;
-import static name.cottereau.laurent.games.poker.model.Rank.randomRank;
 
 /**
  * A card, with a suit and a value.
@@ -41,14 +39,6 @@ public class Card implements Comparable {
         } else {
             throw new ClassCastException("You can't compare Cards to something else...");
         }
-    }
-    
-    /**
-     * Gives a random valid card.
-     * @return a random valid card.
-     */
-    public static Card deal() {
-        return new Card(randomSuit(), randomRank());
     }
 
 }

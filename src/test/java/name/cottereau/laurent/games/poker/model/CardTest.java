@@ -16,14 +16,13 @@
  */
 package name.cottereau.laurent.games.poker.model;
 
-import static name.cottereau.laurent.games.poker.model.Card.deal;
-import static name.cottereau.laurent.games.poker.model.Suit.CLUBS;
-import static name.cottereau.laurent.games.poker.model.Suit.HEARTS;
-import static name.cottereau.laurent.games.poker.model.Suit.SPADES;
 import static name.cottereau.laurent.games.poker.model.Rank.ACE;
 import static name.cottereau.laurent.games.poker.model.Rank.KING;
 import static name.cottereau.laurent.games.poker.model.Rank.QUEEN;
 import static name.cottereau.laurent.games.poker.model.Rank.TEN;
+import static name.cottereau.laurent.games.poker.model.Suit.CLUBS;
+import static name.cottereau.laurent.games.poker.model.Suit.HEARTS;
+import static name.cottereau.laurent.games.poker.model.Suit.SPADES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import org.junit.Test;
@@ -58,13 +57,6 @@ public class CardTest {
     public void nice_format_for_strings() {
         assertThat(KING.of(CLUBS).toString()).isEqualTo("K♣");
         assertThat(TEN.of(HEARTS).toString()).isEqualTo("10♥");
-    }
-    
-    @Test
-    public void deal_gives_a_non_null_card() {
-        Card c = deal();
-        assertThat(c.getSuit()).isNotNull();
-        assertThat(c.getValue()).isNotNull();
     }
 
 }

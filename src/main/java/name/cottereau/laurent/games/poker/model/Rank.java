@@ -16,7 +16,6 @@
  */
 package name.cottereau.laurent.games.poker.model;
 
-import static java.lang.Math.random;
 import static lombok.AccessLevel.PRIVATE;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -40,17 +39,6 @@ public enum Rank {
     @Override
     public String toString() {
         return label;
-    }
-
-    /**
-     * Returns a random value, with evenly distributed chances. It is actually
-     * pseudo-random.
-     *
-     * @TODO refactor with the same {@link Suit#randomSuit() }.
-     * @return a random value
-     */
-    public static Rank randomRank() {
-        return values()[(int) (random() * values().length)];
     }
 
 }
