@@ -17,16 +17,9 @@
 package name.cottereau.laurent.games.poker.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import static lombok.AccessLevel.PRIVATE;
 import lombok.AllArgsConstructor;
-import name.cottereau.laurent.games.poker.model.rank.Rank;
-import static name.cottereau.laurent.games.poker.model.rank.Rank.Type.FOUR_OF_A_KIND;
-import static name.cottereau.laurent.games.poker.model.rank.Rank.Type.HIGH_CARD;
-import static name.cottereau.laurent.games.poker.model.rank.Rank.Type.PAIR;
-import static name.cottereau.laurent.games.poker.model.rank.Rank.Type.THREE_OF_A_KIND;
-import static name.cottereau.laurent.games.poker.model.rank.Rank.Type.TWO_PAIRS;
 
 /**
  * A set of cards, representing the pocket of a player, as well as the communal
@@ -34,7 +27,7 @@ import static name.cottereau.laurent.games.poker.model.rank.Rank.Type.TWO_PAIRS;
  */
 @lombok.Value
 @AllArgsConstructor(access = PRIVATE)
-public class Hand implements Comparable<Hand> {
+public class Hand {
 
     /**
      * A hand contains, at the most, the pocket (2 cards), the flop (3 cards),
@@ -68,86 +61,5 @@ public class Hand implements Comparable<Hand> {
         }
 
         return new Hand(cards);
-    }
-
-    @Override
-    public int compareTo(Hand o) {
-        return getRank().compareTo(o.getRank());
-    }
-
-    /**
-     * Returns the rank for this hand.
-     *
-     * @return the rank for this hand.
-     */
-    public Rank getRank() {
-        final Value[] allValues = Value.values();
-        List<Integer> handValues = new ArrayList<>(
-                Collections.nCopies(allValues.length, 0));
-
-        for (Card c : cards) {
-            final int index = allValues.length - c.getValue().ordinal() - 1;
-            if (handValues.get(index) == null) {
-                handValues.set(index, 1);
-            } else {
-                handValues.set(index, handValues.get(index) + 1);
-            }
-        }
-        
-        if (handValues.contains(4)) {
-            List<Value> specifics = new ArrayList<>(1);
-            specifics.add(allValues[allValues.length - handValues.indexOf(4) - 1]);
-            return new Rank(FOUR_OF_A_KIND, specifics);
-        } else if (handValues.contains(3)) {
-            List<Value> specifics = new ArrayList<>(1);
-            specifics.add(allValues[allValues.length - handValues.indexOf(3) - 1]);
-            return new Rank(THREE_OF_A_KIND, specifics);
-        } else if (handValues.contains(2)) {
-            List<Value> specifics = new ArrayList<>(4);
-            final int indexOfHighPair = handValues.indexOf(2);
-            specifics.add(allValues[allValues.length - indexOfHighPair - 1]);
-            Rank.Type type;
-            int nbKickers;
-            if (handValues.subList(indexOfHighPair + 1, handValues.size()).contains(
-                    2)) {
-                type = TWO_PAIRS;
-                nbKickers = 1;
-                int indexOfLowPair = handValues.subList(indexOfHighPair + 1,
-                        handValues.size()).indexOf(2);
-                specifics.add(
-                        allValues[allValues.length - indexOfHighPair - 1 - indexOfLowPair - 1]);
-            } else {
-                type = PAIR;
-                nbKickers = 3;
-            }
-            specifics.addAll(getKickers(handValues, nbKickers));
-            return new Rank(type, specifics);
-
-        } else if (handValues.contains(1)) {
-            return new Rank(HIGH_CARD, getKickers(handValues, 4));
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * Détermine les kickers à partir des occurences des valeurs des cartes. Ce
-     * sont les valeurs qui sont présentes en 1 exemplaire exactement, par ordre
-     * inversehandValuesde rang.
-     *
-     * @param nbValues les occurences des cartes dans la main.
-     * @return la liste des kickers.
-     */
-    private List<Value> getKickers(List<Integer> handValues, int max) {
-        List<Value> kickers = new ArrayList<>(max);
-        int i = handValues.indexOf(1);
-        int j = 0;
-        while (i > -1 && kickers.size() < max) {
-            kickers.add(Value.values()[Value.values().length - j - i - 1]);
-            j = i + j + 1;
-            i = handValues.subList(j, handValues.size()).indexOf(1);
-        }
-        return kickers;
-    }
-
+    }       
 }
