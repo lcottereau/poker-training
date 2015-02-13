@@ -18,8 +18,8 @@ package name.cottereau.laurent.games.poker.model;
 
 import static name.cottereau.laurent.games.poker.model.Suit.HEARTS;
 import static name.cottereau.laurent.games.poker.model.Suit.SPADES;
-import static name.cottereau.laurent.games.poker.model.Value.KING;
-import static name.cottereau.laurent.games.poker.model.Value.THREE;
+import static name.cottereau.laurent.games.poker.model.Rank.KING;
+import static name.cottereau.laurent.games.poker.model.Rank.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import org.junit.Test;

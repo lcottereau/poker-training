@@ -16,19 +16,19 @@
  */
 package name.cottereau.laurent.games.poker.model;
 
-import static name.cottereau.laurent.games.poker.model.Value.ACE;
-import static name.cottereau.laurent.games.poker.model.Value.TEN;
-import static name.cottereau.laurent.games.poker.model.Value.THREE;
+import static name.cottereau.laurent.games.poker.model.Rank.ACE;
+import static name.cottereau.laurent.games.poker.model.Rank.TEN;
+import static name.cottereau.laurent.games.poker.model.Rank.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 
 /**
- * Test of {@link Value}.
+ * Test of {@link Rank}.
  */
-public class ValueTest {
+public class RankTest {
     
     @Test
-    public void formatted_value() {
+    public void formatted_rank() {
         assertThat(ACE.toString()).isEqualTo("A");
         assertThat(TEN.toString()).isEqualTo("10");
         assertThat(THREE.toString()).isEqualTo("3");

@@ -20,13 +20,12 @@ import static java.lang.Math.random;
 import static lombok.AccessLevel.PRIVATE;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import static name.cottereau.laurent.games.poker.model.Suit.values;
 
 /**
- * The value of a card.
+ * The rank of a card.
  */
 @AllArgsConstructor(access = PRIVATE)
-public enum Value {
+public enum Rank {
 
     TWO("2"), THREE("3"), FOUR("4"), FIVE("5"),
     SIX("6"), SEVEN("7"), EIGHT("8"), NINE("9"), TEN("10"),
@@ -50,7 +49,7 @@ public enum Value {
      * @TODO refactor with the same {@link Suit#randomSuit() }.
      * @return a random value
      */
-    public static Value randomValue() {
+    public static Rank randomRank() {
         return values()[(int) (random() * values().length)];
     }
 
