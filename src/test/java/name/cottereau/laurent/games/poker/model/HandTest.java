@@ -16,16 +16,17 @@
  */
 package name.cottereau.laurent.games.poker.model;
 
+import static name.cottereau.laurent.games.poker.model.Card._2h;
+import static name.cottereau.laurent.games.poker.model.Card._2s;
+import static name.cottereau.laurent.games.poker.model.Card._4c;
+import static name.cottereau.laurent.games.poker.model.Card._4h;
+import static name.cottereau.laurent.games.poker.model.Card._4s;
+import static name.cottereau.laurent.games.poker.model.Card._Ac;
+import static name.cottereau.laurent.games.poker.model.Card._Kc;
+import static name.cottereau.laurent.games.poker.model.Card._Qh;
+import static name.cottereau.laurent.games.poker.model.Card._Qs;
+import static name.cottereau.laurent.games.poker.model.Card._Ts;
 import static name.cottereau.laurent.games.poker.model.Hand.deal;
-import static name.cottereau.laurent.games.poker.model.Suit.CLUBS;
-import static name.cottereau.laurent.games.poker.model.Suit.HEARTS;
-import static name.cottereau.laurent.games.poker.model.Suit.SPADES;
-import static name.cottereau.laurent.games.poker.model.Rank.ACE;
-import static name.cottereau.laurent.games.poker.model.Rank.FOUR;
-import static name.cottereau.laurent.games.poker.model.Rank.KING;
-import static name.cottereau.laurent.games.poker.model.Rank.QUEEN;
-import static name.cottereau.laurent.games.poker.model.Rank.TEN;
-import static name.cottereau.laurent.games.poker.model.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import org.junit.Test;
@@ -37,19 +38,15 @@ public class HandTest {
 
     @Test
     public void deal_in_order() {
-        Hand h = deal(KING.of(CLUBS), TWO.of(HEARTS), FOUR.of(CLUBS), FOUR.of(
-                HEARTS), FOUR.of(SPADES), TWO.of(SPADES), ACE.of(CLUBS));
-        assertThat(h.getCards()).hasSize(7).containsExactly(KING.of(CLUBS),
-                TWO.of(HEARTS), FOUR.of(CLUBS), FOUR.of(HEARTS), FOUR.of(SPADES),
-                TWO.of(SPADES), ACE.of(CLUBS));
+        Hand h = deal(_Kc, _2h, _4c, _4h, _4s, _2s, _Ac);
+        assertThat(h.getCards()).hasSize(7).containsExactly(_Kc, _2h, _4c, _4h,
+                _4s, _2s, _Ac);
     }
 
     @Test
     public void cannot_overdeal() {
         try {
-            deal(KING.of(CLUBS), TWO.of(HEARTS), FOUR.of(CLUBS), FOUR.of(HEARTS),
-                    FOUR.of(SPADES), TEN.of(SPADES), ACE.of(CLUBS),
-                    QUEEN.of(HEARTS));
+            deal(_Kc, _2h, _4c, _4h, _4s, _Ts, _Ac, _Qh);
             failBecauseExceptionWasNotThrown(IndexOutOfBoundsException.class);
         } catch (IndexOutOfBoundsException e) {
             assertThat(e).hasMessage("The hand is already fully dealt...");
@@ -59,7 +56,7 @@ public class HandTest {
     @Test
     public void cannot_deal_the_same_card_twice() {
         try {
-            deal(QUEEN.of(SPADES), KING.of(CLUBS), QUEEN.of(SPADES));
+            deal(_Qs, _Kc, _Qs);
             failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
         } catch (IllegalArgumentException e) {
             assertThat(e).hasMessage("Q♠ was already dealt...");

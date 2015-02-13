@@ -16,13 +16,11 @@
  */
 package name.cottereau.laurent.games.poker.model;
 
-import static name.cottereau.laurent.games.poker.model.Rank.ACE;
-import static name.cottereau.laurent.games.poker.model.Rank.KING;
-import static name.cottereau.laurent.games.poker.model.Rank.QUEEN;
-import static name.cottereau.laurent.games.poker.model.Rank.TEN;
-import static name.cottereau.laurent.games.poker.model.Suit.CLUBS;
-import static name.cottereau.laurent.games.poker.model.Suit.HEARTS;
-import static name.cottereau.laurent.games.poker.model.Suit.SPADES;
+import static name.cottereau.laurent.games.poker.model.Card._Ac;
+import static name.cottereau.laurent.games.poker.model.Card._Kc;
+import static name.cottereau.laurent.games.poker.model.Card._Kh;
+import static name.cottereau.laurent.games.poker.model.Card._Qs;
+import static name.cottereau.laurent.games.poker.model.Card._Th;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import org.junit.Test;
@@ -36,7 +34,7 @@ public class CardTest {
     @Test
     public void cannot_compare_card_with_non_card() {
         try {
-            ACE.of(CLUBS).compareTo(new Object());
+            _Ac.compareTo(new Object());
             failBecauseExceptionWasNotThrown(ClassCastException.class);
         } catch (ClassCastException e) {
             assertThat(e).hasMessage("You can't compare Cards to something else...");
@@ -45,18 +43,18 @@ public class CardTest {
     
     @Test
     public void same_value_different_suit_is_equal() {
-        assertThat(KING.of(HEARTS).compareTo(KING.of(CLUBS))).isZero();
+        assertThat(_Kh.compareTo(_Kc)).isZero();
     }
     
     @Test
     public void compare_to_gives_difference_of_values() {
-        assertThat(QUEEN.of(SPADES).compareTo(TEN.of(HEARTS))).isEqualTo(-2);
+        assertThat(_Qs.compareTo(_Th)).isEqualTo(-2);
     }
     
     @Test
     public void nice_format_for_strings() {
-        assertThat(KING.of(CLUBS).toString()).isEqualTo("K♣");
-        assertThat(TEN.of(HEARTS).toString()).isEqualTo("10♥");
+        assertThat(_Kc.toString()).isEqualTo("K♣");
+        assertThat(_Th.toString()).isEqualTo("10♥");
     }
 
 }
